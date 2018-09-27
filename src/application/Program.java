@@ -1,26 +1,25 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Program {
 
     public static void main(String[] args) {
         
-        String path = "c:\\temp\\in.txt";
-       
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            String line = br.readLine(); // quando o arquito chegar no final será retornado null.
-            
-            while (line != null) {
-                System.out.println(line);
-                line = br.readLine();
+        String[] lines = new String[]{"Good morning",  "Good afternoon", "Good night"};
+        
+        String path = "c:\\temp\\out.txt";
+        
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){ //removendo o parâmetro true o arquivo não é recriado e sim escribo abaixo da ulima linha.
+            for (String line : lines) {
+                bw.write(line);
+                bw.newLine();
             }
-        } 
-        catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    
 }
