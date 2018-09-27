@@ -1,25 +1,33 @@
 package application;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
+import java.util.Scanner;
 
 public class Program {
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         
-        String[] lines = new String[]{"Good morning",  "Good afternoon", "Good night"};
+        System.out.println("Enter a folder path: ");
+        String strPath = sc.nextLine();
         
-        String path = "c:\\temp\\out.txt";
+        File path = new File(strPath);
         
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){ //removendo o parâmetro true o arquivo não é recriado e sim escribo abaixo da ulima linha.
-            for (String line : lines) {
-                bw.write(line);
-                bw.newLine();
-            }
-            
-        } catch (IOException e) {
-            e.printStackTrace();
+        File[] folders = path.listFiles(File::isDirectory); // lista as pastas existentes dentro do caminho
+        System.out.println("Folders: ");
+        for (File folder : folders){
+            System.out.println(folder);
         }
+        
+        File[] files = path.listFiles(File::isFile);  //lista arquivos do diretório
+        System.out.println("Files: ");
+        for (File file : files){
+            System.out.println(file);
+        }
+        
+        boolean success = new File(strPath + "\\subdir").mkdir(); // cria uma pasta caso não tenha.
+        System.out.println("Directory created successfully: " + success);
+        
+        sc.close();
     }
 }
